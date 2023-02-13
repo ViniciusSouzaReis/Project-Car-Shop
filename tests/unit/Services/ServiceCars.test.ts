@@ -75,10 +75,14 @@ describe('Testes da camada service', function () {
   });
 
   it('Deveria lancar erro por carro nao encontrado', async function () {
-    sinon.stub(Model, 'findById').resolves([]);
+    sinon.stub(Model, 'findById').resolves({});
     const service = new CarService();
     const result = await service.getById('63ea9a8c01000ca6dad99a32');
     
     expect(result).to.be.deep.equal([]);
   });
+
+  // afterEach(function () {
+  //   sinon.restore();
+  // });
 });
