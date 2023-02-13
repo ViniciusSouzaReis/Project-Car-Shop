@@ -22,6 +22,6 @@ export default class MotorcycleODM extends AbstractODM<IMotorcycle> {
       category: { type: String, required: true },
       engineCapacity: { type: Number, required: true },
     });
-    this.model = models.Car || model('Car', this.schema);
+    this.model = models.Motorcycle || model('Motorcycle', this.schema);
   }
 }
