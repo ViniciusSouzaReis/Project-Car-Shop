@@ -9,8 +9,25 @@ export default class CarService {
   }
 
   public async registerNewCar(car: ICar) {
-    const cardODM = new CarODM();
-    const registerCar = await cardODM.create(car);
+    const carODM = new CarODM();
+    const registerCar = await carODM.create(car);
     return this.createCarDomain(registerCar);
+  }
+
+  public async getAllCars() {
+    const carODM = new CarODM();
+    const cars = await carODM.find();
+    const allCars = cars.map((car) =>
+      this.createCarDomain(car));
+    return allCars;
+  }
+
+  public async getById(id: string) {
+    const carODM = new CarODM();
+    const carId = await carODM.carFindById(id);
+    if (carId === undefined) return undefined;
+    const allCars = carId.map((car) =>
+      this.createCarDomain(car));
+    return allCars;
   }
 }
