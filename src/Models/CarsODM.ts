@@ -28,12 +28,23 @@ export default class CarODM {
     return this.model.create({ ...car });
   }
 
-  public async carFindById(id: string): Promise<ICar[] | undefined> {
+  public async findById(id: string): Promise<ICar[] | undefined> {
     if (!isValidObjectId(id)) return undefined;
     return this.model.find({ _id: id });
   }
 
   public async find(): Promise<ICar[]> {
     return this.model.find();
+  }
+
+  public async update(id: string, obj:ICar): 
+  Promise<ICar | null> {
+    if (!isValidObjectId(id)) throw Error('Invalid Mongo ID');
+
+    return this.model.findByIdAndUpdate(
+      { _id: id },
+      { ...obj },
+      { new: true },
+    );    
   }
 }

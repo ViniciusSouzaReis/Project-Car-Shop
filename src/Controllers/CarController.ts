@@ -15,6 +15,43 @@ export default class CarController {
     this.service = new CarService();
   }
 
+  public async update() {
+    const {
+      model,
+      year,
+      color,
+      status,
+      buyValue,
+      doorsQty,
+      seatsQty,
+    } = this.req.body;
+
+    const { id } = this.req.params;
+
+    let checkStatus = true;
+
+    if (!status) {
+      checkStatus = false;
+    }
+
+    try {
+      const obj: ICar = {
+        model,
+        year,
+        color,
+        status: checkStatus,
+        buyValue,
+        doorsQty,
+        seatsQty,
+      };
+      const updateCar = await this.service.update(id, obj);
+      if (updateCar === undefined) return this.res.status(404).json({ message: 'Car not found' });
+      return this.res.status(200).json(updateCar);
+    } catch (error) {
+      this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
+
   public async getAllCars() {
     try {
       const allCars = await this.service.getAllCars();
